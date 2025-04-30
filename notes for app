@@ -1,0 +1,5 @@
+POWERSHELL:
+
+PS C:\Users\kevin> cd C:\WhisperDictation
+PS C:\WhisperDictation> .\whisp\Scripts\activate
+(whisp) PS C:\WhisperDictation> .\start_dictation.bat
