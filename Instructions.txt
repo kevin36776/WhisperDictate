@@ -86,3 +86,36 @@ git push origin main
 - Hold `Ctrl+Alt` to start recording
 - Release `Ctrl+Alt` to stop recording and transcribe
 - The text will automatically be copied to your clipboard and pasted
+
+
+TO START ON BOOT:::
+
+1. **Set Up Task Scheduler**:
+   - Open Task Scheduler (press Windows key and type "Task Scheduler")
+   - Click "Create Basic Task..." in the right panel
+   - Name: "WhisperDictation"
+   - Description: "Runs WhisperDictation app at startup"
+   - Trigger: Choose "When I log on"
+   - Action: "Start a program"
+   - Program/script: Browse to and select the `run_whisper_dictation.vbs` file
+
+2. **Configure Advanced Settings**:
+   - After creating the task, find it in Task Scheduler Library
+   - Right-click and select "Properties"
+   - In "General" tab:
+     - Check "Run with highest privileges"
+     - Change "Configure for" to your Windows version
+   - In "Conditions" tab:
+     - Uncheck "Start the task only if the computer is on AC power"
+     - Uncheck "Stop if the computer switches to battery power"
+   - In "Settings" tab:
+     - Check "Allow task to be run on demand"
+     - Check "Run task as soon as possible after a scheduled start is missed"
+   - Click "OK" to save
+
+3. **Testing the Setup**:
+   - Right-click the task in Task Scheduler
+   - Select "Run"
+   - Try the Ctrl+Alt hotkey to verify it's working
+
+Note: The task won't appear in Task Manager's Startup tab as it uses Task Scheduler instead. To disable automatic startup, open Task Scheduler, find the WhisperDictation task, and select "Disable".

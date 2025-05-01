@@ -16,25 +16,7 @@ A simple dictation tool that uses OpenAI's Whisper model for real-time speech-to
 - Required Python packages (see requirements.txt)
 - A microphone for audio input
 
-## Installation
-
-1. Clone this repository:
-```bash
-git clone [repository-url]
-cd WhisperDictation
-```
-
-2. Install the required packages:
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
-
-1. Run the application:
-```bash
-python dictation_app.py
-```
+-----------------------
 
 2. Look for the microphone icon in your system tray
 3. Hold Ctrl+Alt to start recording
