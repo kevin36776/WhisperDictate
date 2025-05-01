@@ -1,3 +1,4 @@
 Set WShell = CreateObject("WScript.Shell")
-WShell.CurrentDirectory = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
-WShell.Run """" & WShell.CurrentDirectory & "\run_whisper_dictation.bat""", 0, False 
+strPath = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
+WShell.CurrentDirectory = strPath
+WShell.Run Chr(34) & strPath & "\run_whisper_dictation.bat" & Chr(34), 0, False 
