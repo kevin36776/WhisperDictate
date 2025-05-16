@@ -108,41 +108,4 @@ python dictation_app.py
 
 Note: The task won't appear in Task Manager's Startup tab as it uses Task Scheduler instead. To disable automatic startup, open Task Scheduler, find the WhisperDictation task, and select "Disable".
 
-## 🔄 Git Usage Guide
-
-### Daily Git Workflow
-
-#### Before Making Changes
-```bash
-# Get latest changes from repository
-git pull origin main
-```
-
-#### After Making Changes
-```bash
-# Check what files have been modified
-git status
-
-# Add specific files (recommended approach)
-git add filename.py
-git add another_file.py
-
-# Alternative: Add all changes (use carefully)
-git add .
-
-# Commit your changes with a descriptive message
-git commit -m "Clear description of what you changed"
-
-# Push changes to GitHub
-git push origin main
-```
-
-### Best Practices
-- Always check `git status` before adding files
-- Write clear, descriptive commit messages
-- Pull before making new changes
-- Commit related changes together
-
-## 🙏 Acknowledgments
-
 This project uses OpenAI's Whisper model for speech recognition. 
