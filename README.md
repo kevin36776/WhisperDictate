@@ -69,10 +69,9 @@ python dictation_app.py
 
 ## 🎯 How to Use
 
-1. Look for the microphone icon in your system tray
-2. Hold Ctrl+Alt to start recording
-3. Release Ctrl+Alt to stop recording and transcribe
-4. The transcribed text will be automatically pasted at your cursor position
+1. Hold Ctrl+Alt to start recording
+2. Release Ctrl+Alt to stop recording and transcribe
+3. The transcribed text will be automatically pasted at your cursor position
 
 ## 🚀 Setting Up Automatic Startup
 
