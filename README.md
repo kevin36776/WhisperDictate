@@ -49,14 +49,13 @@ Download FFmpeg from [ffmpeg.org](https://ffmpeg.org), extract it, and add the b
 ### 2. Clone the Project
 
 ```bash
-cd C:\
 git clone https://github.com/kevin36776/WhisperDictate.git
-cd WhisperDictate
 ```
 
 ### 3. Create and Activate Virtual Environment
 
 ```bash
+cd WhisperDictate
 python -m venv dictate-env
 .\dictate-env\Scripts\activate
 ```
