@@ -13,7 +13,6 @@ import tempfile
 
 model = whisper.load_model("base.en")
 
-# Global variables
 recording = False
 audio_frames = []
 CHUNK = 1024
