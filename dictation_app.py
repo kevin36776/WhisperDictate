@@ -11,7 +11,6 @@ import pystray
 from PIL import Image, ImageDraw
 import tempfile
 
-# Initialize Whisper model - using the "base.en" model for English
 model = whisper.load_model("base.en")
 
 # Global variables
@@ -24,7 +23,6 @@ RATE = 16000
 p = pyaudio.PyAudio()
 
 def create_icon():
-    # Create a simple microphone icon
     image = Image.new('RGB', (64, 64), color = (255, 255, 255))
     dc = ImageDraw.Draw(image)
     dc.rectangle((20, 20, 44, 50), fill=(0, 0, 0))
@@ -46,12 +44,9 @@ def stop_recording():
         recording = False
         print("Recording stopped, transcribing...")
         
-        # Wait for recording thread to finish
         time.sleep(0.5)
         
-        # Only process if we have recorded audio
         if audio_frames:
-            # Save audio to temporary file
             temp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
             temp_file_name = temp_file.name
             temp_file.close()
@@ -62,19 +57,15 @@ def stop_recording():
                 wf.setframerate(RATE)
                 wf.writeframes(b''.join(audio_frames))
             
-            # Transcribe audio using Whisper
             result = model.transcribe(temp_file_name)
             text = result["text"].strip()
             
-            # Copy to clipboard
             pyperclip.copy(text)
             
-            # Delete temporary file
             os.unlink(temp_file_name)
             
             print(f"Transcribed: {text}")
             
-            # Simulate paste (Ctrl+V)
             keyboard.press_and_release('ctrl+v')
 
 def record_audio():
@@ -107,10 +98,8 @@ def on_hotkey(e):
         stop_recording()
 
 def main():
-    # Set up keyboard hooks for Ctrl and Alt
     keyboard.hook(on_hotkey)
     
-    # Create system tray icon
     icon = pystray.Icon("WhisperDictation")
     icon.icon = create_icon()
     icon.menu = pystray.Menu(
