@@ -36,14 +36,14 @@ FFmpeg Install:
 choco install ffmpeg -y
 ```
 
-**Scoop:**
+**Scoop install option:**
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 iwr -useb get.scoop.sh | iex
 scoop install ffmpeg
 ```
 
-**Manual:**
+**or Manual:**
 Download FFmpeg from [ffmpeg.org](https://ffmpeg.org), extract it, and add the bin folder to PATH.
 
 ### 2. Clone the Project
