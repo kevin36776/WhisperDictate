@@ -1,99 +1,113 @@
-# README.md — WhisperDictation
-# Everything in one PowerShell block for easy copy/paste
+# WhisperDictation
 
-# ===== About =====
-# WhisperDictation is a simple dictation tool that uses OpenAI Whisper for speech-to-text.
-# Hotkey: hold Ctrl+Alt to record, release to transcribe and paste.
+WhisperDictation is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt to record your voice and release to transcribe and paste the text.
 
-# ===== Requirements =====
-# - Windows
-# - Python 3.7+
-# - FFmpeg
+## Features
 
-# ===== 1) Install FFmpeg (pick ONE method) =====
+- Voice recording with Ctrl+Alt hotkey
+- Automatic transcription with Whisper
+- System tray integration
+- Text pasted automatically at cursor
+- Works on Windows with English
 
-# --- Chocolatey (recommended) ---
+## Requirements
+
+- Python 3.7+
+- FFmpeg
+- Windows
+
+## Installation
+
+### 1. Install FFmpeg
+
+Pick one method:
+
+**Chocolatey (recommended):**
+```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
-[System.Net.ServicePointManager]::SecurityProtocol = `
-    [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 choco install ffmpeg -y
 ffmpeg -version
+```
 
-# --- Scoop (alternative) ---
-# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-# iwr -useb get.scoop.sh | iex
-# scoop install ffmpeg
-# ffmpeg -version
+**Scoop:**
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+iwr -useb get.scoop.sh | iex
+scoop install ffmpeg
+```
 
-# --- Manual (alternative) ---
-# Download from https://ffmpeg.org/download.html
-# Extract (e.g., C:\ffmpeg) and add C:\ffmpeg\bin to PATH
-# Close/reopen terminal, then:
-# ffmpeg -version
+**Manual:**
+Download FFmpeg from [ffmpeg.org](https://ffmpeg.org), extract it, and add the bin folder to PATH.
 
-# ===== 2) Clone Project =====
+### 2. Clone the Project
+
+```bash
 cd C:\
 git clone https://github.com/kevin36776/WhisperDictate.git
 cd WhisperDictate
+```
 
-# ===== 3) Create and Activate Virtual Environment =====
+### 3. Create and Activate Virtual Environment
+
+```bash
 python -m venv dictate-env
 .\dictate-env\Scripts\activate
+```
 
-# ===== 4) Install Dependencies =====
+### 4. Install Dependencies
+
+**Upgrade pip:**
+```bash
 python -m pip install --upgrade pip
+```
 
-# Install Torch (pick ONE)
-# If you have NVIDIA GPU (CUDA 12.1 wheels):
-# pip install torch --index-url https://download.pytorch.org/whl/cu121
-# CPU only:
+**Install Torch:**
+
+With NVIDIA GPU:
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+```
+
+CPU only:
+```bash
 pip install torch
+```
 
-# Install remaining requirements
+**Install remaining requirements:**
+```bash
 pip install -r requirements.txt
+```
 
-# If PyAudio fails on Windows, use pipwin:
-# pip install pipwin
-# pipwin install pyaudio
+If PyAudio fails:
+```bash
+pip install pipwin
+pipwin install pyaudio
+```
 
-# ===== 5) First Run =====
+### 5. Run
+
+```bash
 python dictation_app.py
+```
 
-# ===== Usage =====
-# - Hold Ctrl+Alt to start recording
-# - Release Ctrl+Alt to transcribe
-# - Text pastes at the cursor
+## Usage
 
-# ===== Optional: Run at Startup via Task Scheduler =====
-# 1) Open Task Scheduler -> Create Basic Task
-# 2) Name: WhisperDictation
-# 3) Trigger: When I log on
-# 4) Action: Start a program -> select run_whisper_dictation.vbs
-# 5) Properties:
-#    - General: Run with highest privileges
-#    - Conditions: allow on battery
-#    - Settings: allow run on demand; run ASAP if missed
-# To disable later: open Task Scheduler and Disable the task
+- Hold **Ctrl+Alt** to start recording
+- Release **Ctrl+Alt** to stop and transcribe
+- Text is pasted automatically at your cursor
 
-# ===== License (MIT) =====
-# Copyright (c) 2025 Kevin Dzitkowski
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+## Startup (optional)
 
-# ===== Notes =====
-# - This is an independent project. Not affiliated with Whisper Flow or OpenAI.
-# - Keep "models" and virtual env folders out of git.
+You can use Task Scheduler to run WhisperDictation on startup. Create a basic task, choose "When I log on," and point it to run_whisper_dictation.vbs. Adjust settings so it runs with highest privileges and works on battery power if needed.
+
+To disable, open Task Scheduler and disable the task.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+*This is an independent project and not affiliated with Whisper Flow or OpenAI.*
