@@ -1,7 +1,0 @@
-GitHub key: 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
-
-POWERSHELL:
-
-PS C:\Users\kevin> cd C:\WhisperDictation
-PS C:\WhisperDictation> .\whisp\Scripts\activate
-(whisp) PS C:\WhisperDictation> .\start_dictation.bat
