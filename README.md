@@ -1,110 +1,99 @@
-# WhisperDictation
+# README.md — WhisperDictation
+# Everything in one PowerShell block for easy copy/paste
 
-A simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt to record your voice, and release to automatically transcribe and paste the text.
+# ===== About =====
+# WhisperDictation is a simple dictation tool that uses OpenAI Whisper for speech-to-text.
+# Hotkey: hold Ctrl+Alt to record, release to transcribe and paste.
 
-## ✨ Features
+# ===== Requirements =====
+# - Windows
+# - Python 3.7+
+# - FFmpeg
 
-- Real-time voice recording with Ctrl+Alt hotkey
-- Automatic transcription using Whisper AI
-- System tray integration
-- Automatic clipboard paste of transcribed text
-- Support for English language
+# ===== 1) Install FFmpeg (pick ONE method) =====
 
-## 📋 Requirements
+# --- Chocolatey (recommended) ---
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = `
+    [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+choco install ffmpeg -y
+ffmpeg -version
 
-- Python 3.7+
-- FFmpeg
-- Windows OS
+# --- Scoop (alternative) ---
+# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+# iwr -useb get.scoop.sh | iex
+# scoop install ffmpeg
+# ffmpeg -version
 
-## 🚀 Installation Guide
+# --- Manual (alternative) ---
+# Download from https://ffmpeg.org/download.html
+# Extract (e.g., C:\ffmpeg) and add C:\ffmpeg\bin to PATH
+# Close/reopen terminal, then:
+# ffmpeg -version
 
-### Step 1: Prerequisites
+# ===== 2) Clone Project =====
+cd C:\
+git clone https://github.com/kevin36776/WhisperDictate.git
+cd WhisperDictate
 
-1. **Open PowerShell as Administrator**
-2. **Install Chocolatey** (if not already installed):
-   ```powershell
-   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-   ```
-3. **Install FFmpeg**:
-   ```powershell
-   choco install ffmpeg -y
-   ```
-4. **Verify FFmpeg**:
-   ```powershell
-   ffmpeg -version
-   ```
+# ===== 3) Create and Activate Virtual Environment =====
+python -m venv dictate-env
+.\dictate-env\Scripts\activate
 
-### Step 2: Project Setup
-
-1. **Clone Repository**:
-   ```powershell
-   cd C:\
-   git clone https://github.com/kevin36776/WhisperDictate.git
-   cd WhisperDictate
-   ```
-2. **Create & Activate Virtual Environment**:
-   ```powershell
-   python -m venv whisp
-   .\whisp\Scripts\activate
-   ```
-
-### Step 3: Install Dependencies
-
-```powershell
+# ===== 4) Install Dependencies =====
 python -m pip install --upgrade pip
-pip install openai-whisper pyaudio keyboard pystray pillow pyperclip
-```
 
-### Step 4: Create Models Directory
+# Install Torch (pick ONE)
+# If you have NVIDIA GPU (CUDA 12.1 wheels):
+# pip install torch --index-url https://download.pytorch.org/whl/cu121
+# CPU only:
+pip install torch
 
-```powershell
-mkdir models
-```
+# Install remaining requirements
+pip install -r requirements.txt
 
-### Step 5: Run Application
+# If PyAudio fails on Windows, use pipwin:
+# pip install pipwin
+# pipwin install pyaudio
 
-```powershell
+# ===== 5) First Run =====
 python dictation_app.py
-```
 
-## 🎯 How to Use
+# ===== Usage =====
+# - Hold Ctrl+Alt to start recording
+# - Release Ctrl+Alt to transcribe
+# - Text pastes at the cursor
 
-1. Hold Ctrl+Alt to start recording
-2. Release Ctrl+Alt to stop recording and transcribe
-3. The transcribed text will be automatically pasted at your cursor position
+# ===== Optional: Run at Startup via Task Scheduler =====
+# 1) Open Task Scheduler -> Create Basic Task
+# 2) Name: WhisperDictation
+# 3) Trigger: When I log on
+# 4) Action: Start a program -> select run_whisper_dictation.vbs
+# 5) Properties:
+#    - General: Run with highest privileges
+#    - Conditions: allow on battery
+#    - Settings: allow run on demand; run ASAP if missed
+# To disable later: open Task Scheduler and Disable the task
 
-## 🚀 Setting Up Automatic Startup
+# ===== License (MIT) =====
+# Copyright (c) 2025 Kevin Dzitkowski
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
-### Option 1: Using Task Scheduler
-
-1. **Set Up Task Scheduler**:
-   - Open Task Scheduler (press Windows key and type "Task Scheduler")
-   - Click "Create Basic Task..." in the right panel
-   - Name: "WhisperDictation"
-   - Description: "Runs WhisperDictation app at startup"
-   - Trigger: Choose "When I log on"
-   - Action: "Start a program"
-   - Program/script: Browse to and select the `run_whisper_dictation.vbs` file
-
-2. **Configure Advanced Settings**:
-   - After creating the task, find it in Task Scheduler Library
-   - Right-click and select "Properties"
-   - In "General" tab:
-     - Check "Run with highest privileges"
-     - Change "Configure for" to your Windows version
-   - In "Conditions" tab:
-     - Uncheck "Start the task only if the computer is on AC power"
-     - Uncheck "Stop if the computer switches to battery power"
-   - In "Settings" tab:
-     - Check "Allow task to be run on demand"
-     - Check "Run task as soon as possible after a scheduled start is missed"
-   - Click "OK" to save
-
-3. **Testing the Setup**:
-   - Right-click the task in Task Scheduler
-   - Select "Run"
-   - Try the Ctrl+Alt hotkey to verify it's working
-
-Note: The task won't appear in Task Manager's Startup tab as it uses Task Scheduler instead. To disable automatic startup, open Task Scheduler, find the WhisperDictation task, and select "Disable".
-
-This project uses OpenAI's Whisper model for speech recognition. 
+# ===== Notes =====
+# - This is an independent project. Not affiliated with Whisper Flow or OpenAI.
+# - Keep "models" and virtual env folders out of git.
