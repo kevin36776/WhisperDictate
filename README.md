@@ -16,7 +16,7 @@ WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for r
 - FFmpeg
 - Windows
 
-## Installation
+## Installation - Run these in terminal as admin
 
 ### 1. Install FFmpeg
 
