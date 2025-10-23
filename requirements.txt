@@ -1,29 +1,8 @@
-# SVM Trading Bot Requirements
-# Core data science and machine learning libraries
-pandas>=1.5.0
-numpy>=1.21.0
-scikit-learn>=1.1.0
-
-# Technical analysis library for indicators
-ta>=0.10.0
-
-# Exchange integration for Bybit
-ccxt>=3.0.0
-
-# Backtesting framework
-backtesting>=0.3.3
-
-# Data visualization and plotting
-matplotlib>=3.5.0
-
-# HTTP requests for API calls
-requests>=2.28.0
-
-# Model serialization
-joblib>=1.2.0
-
-# Colored terminal output (optional but used in nice_funcs.py)
-termcolor>=2.1.0
-
-# Additional utilities
-python-dateutil>=2.8.0
+openai-whisper==20231117
+PyAudio==0.2.14
+keyboard==0.13.5
+pynput>=1.7.0
+numpy>=1.20.0
+Pillow>=10.0.0
+pyperclip==1.8.2
+pystray==0.19.5
