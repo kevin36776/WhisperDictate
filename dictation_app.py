@@ -9,6 +9,7 @@ import pyperclip
 import whisper
 import pystray
 from PIL import Image, ImageDraw
+from pynput import mouse
 import tempfile
 
 model = whisper.load_model("base.en")
@@ -20,6 +21,10 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
 p = pyaudio.PyAudio()
+# Right-click + closest thumb button trigger the same recording behavior as Ctrl+Alt.
+MOUSE_TRIGGER_BUTTONS = {mouse.Button.right, mouse.Button.x1}
+pressed_mouse_buttons = set()
+mouse_listener = None
 
 def create_icon():
     image = Image.new('RGB', (64, 64), color = (255, 255, 255))
@@ -83,7 +88,10 @@ def record_audio():
     stream.close()
 
 def on_exit(icon):
+    global mouse_listener
     icon.stop()
+    if mouse_listener is not None:
+        mouse_listener.stop()
     p.terminate()
     os._exit(0)
 
@@ -96,9 +104,28 @@ def on_hotkey(e):
     elif e.event_type == keyboard.KEY_UP and not check_ctrl_alt(e):
         stop_recording()
 
+def mouse_combo_active():
+    return MOUSE_TRIGGER_BUTTONS.issubset(pressed_mouse_buttons)
+
+def on_mouse_event(x, y, button, pressed):
+    if button not in MOUSE_TRIGGER_BUTTONS:
+        return
+
+    if pressed:
+        pressed_mouse_buttons.add(button)
+        if mouse_combo_active():
+            start_recording()
+    else:
+        pressed_mouse_buttons.discard(button)
+        if recording and not mouse_combo_active():
+            stop_recording()
+
 def main():
+    global mouse_listener
     keyboard.hook(on_hotkey)
-    
+    mouse_listener = mouse.Listener(on_click=on_mouse_event)
+    mouse_listener.start()
+
     icon = pystray.Icon("WhisperDictation")
     icon.icon = create_icon()
     icon.menu = pystray.Menu(

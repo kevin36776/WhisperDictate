@@ -1,10 +1,11 @@
 # WhisperDictate
 
-WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt to record your voice and release to transcribe and paste the text. I didn't want to pay for whisperflow so I made this.
+WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt (or the right mouse button + the closest thumb button on a typical Logitech mouse) to record your voice and release to transcribe and paste the text. I didn't want to pay for whisperflow so I made this.
 
 ## Features
 
 - Voice recording with Ctrl+Alt hotkey
+- Optional right-click + thumb button recording trigger
 - Automatic transcription with Whisper
 - System tray integration
 - Text pasted automatically at cursor
@@ -98,13 +99,13 @@ python dictation_app.py
 
 ## Usage
 
-- Hold **Ctrl+Alt** to start recording
-- Release **Ctrl+Alt** to stop and transcribe
+- Hold **Ctrl+Alt** or **right-click + thumb button** to start recording
+- Release the keys/buttons to stop and transcribe
 - Text is pasted automatically at your cursor
 
 ## Startup (optional)
 
-You can use Task Scheduler to run WhisperDictation on startup. Create a basic task, choose "When I log on," and point it to run_whisper_dictation.vbs. Adjust settings so it runs with highest privileges and works on battery power if needed.
+You can use Task Scheduler to run WhisperDictation on startup. Create a basic task, choose "When I log on," and point it to run_whisper_dictation.vbs. Adjust settings so it runs with highest privileges and works on battery power if needed. The launcher writes logs under `logs\whisper_dictation.log`, which is helpful for troubleshooting if the hidden task ever fails.
 
 To disable, open Task Scheduler and disable the task.
 
