@@ -1,6 +1,6 @@
 # WhisperDictate
 
-WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt (or the right mouse button + the closest thumb button on a typical Logitech mouse) to record your voice and release to transcribe and paste the text. I didn't want to pay for whisperflow so I made this.
+A simple voice dictation tool using OpenAI's Whisper model. Hold a hotkey to record, release to transcribe and auto-paste. Free alternative to paid dictation services.
 
 ## Features
 
@@ -17,85 +17,52 @@ WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for r
 - FFmpeg
 - Windows
 
-## Installation - Run these in terminal as admin
+## Installation
 
 ### 1. Install FFmpeg
 
-Pick one method:
-
 **Chocolatey (recommended):**
-
-Chocolately Install:
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
-
-FFmpeg Install:
 ```powershell
 choco install ffmpeg -y
 ```
 
-**Scoop install option:**
+**Or Scoop:**
 ```powershell
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-iwr -useb get.scoop.sh | iex
 scoop install ffmpeg
 ```
 
-**or Manual:**
-Download FFmpeg from [ffmpeg.org](https://ffmpeg.org), extract it, and add the bin folder to PATH.
-
-### 2. Clone the Project
+### 2. Clone & Setup
 
 ```bash
 git clone https://github.com/kevin36776/WhisperDictate.git
-```
-
-### 3. Create and Activate Virtual Environment
-
-```bash
 cd WhisperDictate
 python -m venv dictate-env
 .\dictate-env\Scripts\activate
 ```
 
-### 4. Install Dependencies
+### 3. Install Dependencies
 
-**Upgrade pip:**
-```bash
-python -m pip install --upgrade pip
-```
-
-**Install Torch:**
-
-With NVIDIA GPU:
-```bash
-pip install torch --index-url https://download.pytorch.org/whl/cu121
-```
-
-CPU only:
-```bash
-pip install torch
-```
-
-**Install remaining requirements:**
 ```bash
 pip install -r requirements.txt
 ```
 
-If PyAudio fails:
+**If PyAudio fails:**
 ```bash
-pip install pipwin
-pipwin install pyaudio
+pip install pipwin && pipwin install pyaudio
 ```
 
-### 5. Run
+**GPU Support (optional):**
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+```
+
+### 4. Run
 
 ```bash
 python dictation_app.py
 ```
+
+Or double-click `run_whisper_dictation.vbs` for silent background startup.
 
 ## Usage
 
@@ -103,11 +70,17 @@ python dictation_app.py
 - Release the keys/buttons to stop and transcribe
 - Text is pasted automatically at your cursor
 
-## Startup (optional)
+## Auto-Start on Login (Optional)
 
-You can use Task Scheduler to run WhisperDictation on startup. Create a basic task, choose "When I log on," and point it to run_whisper_dictation.vbs. Adjust settings so it runs with highest privileges and works on battery power if needed. The launcher writes logs under `logs\whisper_dictation.log`, which is helpful for troubleshooting if the hidden task ever fails.
+Run this PowerShell script to add WhisperDictation to your Startup folder:
 
-To disable, open Task Scheduler and disable the task.
+```powershell
+powershell -ExecutionPolicy Bypass -File create_startup_shortcut.ps1
+```
+
+This creates a shortcut in your Startup folder so the app launches automatically when you log in.
+
+**To remove auto-start:** Press `Win+R`, type `shell:startup`, and delete the WhisperDictation shortcut.
 
 ## License
 

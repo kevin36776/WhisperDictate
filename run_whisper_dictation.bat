@@ -9,6 +9,16 @@ set "LOG_FILE=%LOG_DIR%\whisper_dictation.log"
 call :log "Launcher started."
 
 set "PYTHON_CMD="
+
+REM Check for venv at C:\venvs\whispervenv first
+if exist "C:\venvs\whispervenv\Scripts\activate.bat" (
+    call "C:\venvs\whispervenv\Scripts\activate.bat" >> "%LOG_FILE%" 2>&1
+    set "PYTHON_CMD=python"
+    call :log "Using virtual environment: C:\venvs\whispervenv"
+    goto run_app
+)
+
+REM Then check for venvs in project directory
 for %%d in (dictate-env .venv venv env whisp whisp_backup) do (
     if exist "%~dp0%%d\Scripts\activate.bat" (
         call "%~dp0%%d\Scripts\activate.bat" >> "%LOG_FILE%" 2>&1
