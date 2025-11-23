@@ -1,6 +1,6 @@
 # WhisperDictate
 
-WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt (or the right mouse button + the closest thumb button on a typical Logitech mouse) to record your voice and release to transcribe and paste the text. I didn't want to pay for whisperflow so I made this.
+WhisperDictate is a simple dictation tool that uses OpenAI's Whisper model for real-time speech-to-text transcription. Hold Ctrl+Alt (or yor own bind) to record your voice and release to transcribe and paste the text. I didn't want to pay for whisperflow so I made this.
 
 ## Features
 
