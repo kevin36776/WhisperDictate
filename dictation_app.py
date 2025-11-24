@@ -3,16 +3,15 @@ import time
 import threading
 import keyboard
 import pyaudio
-import wave
 import numpy as np
 import pyperclip
 import whisper
+import torch
 import pystray
 from PIL import Image, ImageDraw
 from pynput import mouse
-import tempfile
 
-model = whisper.load_model("base.en")
+model = whisper.load_model("medium.en", device="cuda")
 
 recording = False
 audio_frames = []
@@ -47,29 +46,23 @@ def stop_recording():
     if recording:
         recording = False
         print("Recording stopped, transcribing...")
-        
+
         time.sleep(0.5)
-        
+
         if audio_frames:
-            temp_file = tempfile.NamedTemporaryFile(suffix='.wav', delete=False)
-            temp_file_name = temp_file.name
-            temp_file.close()
-            
-            with wave.open(temp_file_name, 'wb') as wf:
-                wf.setnchannels(CHANNELS)
-                wf.setsampwidth(p.get_sample_size(FORMAT))
-                wf.setframerate(RATE)
-                wf.writeframes(b''.join(audio_frames))
-            
-            result = model.transcribe(temp_file_name)
+            # Convert audio bytes to numpy array
+            audio_data = np.frombuffer(b''.join(audio_frames), dtype=np.int16)
+            # Convert to float32 and normalize to [-1.0, 1.0]
+            audio_float = audio_data.astype(np.float32) / 32768.0
+
+            # Transcribe directly from numpy array (no FFmpeg needed)
+            result = model.transcribe(audio_float, fp16=torch.cuda.is_available())
             text = result["text"].strip()
-            
+
             pyperclip.copy(text)
-            
-            os.unlink(temp_file_name)
-            
+
             print(f"Transcribed: {text}")
-            
+
             keyboard.press_and_release('ctrl+v')
 
 def record_audio():
