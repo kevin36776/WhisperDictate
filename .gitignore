@@ -24,10 +24,14 @@ wheels/
 venv/
 env/
 ENV/
+dictate-env/
+.venv/
+whisp/
 
 # IDE
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 

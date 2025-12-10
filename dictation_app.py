@@ -7,12 +7,19 @@ import wave
 import numpy as np
 import pyperclip
 import whisper
+import torch
 import pystray
 from PIL import Image, ImageDraw
 from pynput import mouse
 import tempfile
 
-model = whisper.load_model("base.en")
+# Use GPU if available (CUDA), otherwise fallback to CPU
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using device: {device}")
+
+# Load the turbo model - 6x faster than large-v3 with similar quality
+# Uses only ~6GB VRAM, perfect for RTX 5080
+model = whisper.load_model("turbo", device=device)
 
 recording = False
 audio_frames = []
@@ -61,7 +68,12 @@ def stop_recording():
                 wf.setframerate(RATE)
                 wf.writeframes(b''.join(audio_frames))
             
-            result = model.transcribe(temp_file_name)
+            # Transcribe with fp16 for GPU acceleration and specify English
+            result = model.transcribe(
+                temp_file_name,
+                language="en",
+                fp16=(device == "cuda")  # Use fp16 on GPU for speed
+            )
             text = result["text"].strip()
             
             pyperclip.copy(text)
@@ -133,7 +145,10 @@ def main():
     )
     icon.title = "Whisper Dictation"
     
-    print("Whisper Dictation started! Hold Ctrl+Alt to record.")
+    print("Whisper Dictation started!")
+    print("  Model: turbo (large-v3-turbo)")
+    print(f"  Device: {device}")
+    print("  Hotkeys: Hold Ctrl+Alt OR Right-click+Thumb button to record")
     icon.run()
 
 if __name__ == "__main__":
