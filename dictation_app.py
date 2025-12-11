@@ -99,11 +99,47 @@ def record_audio():
     stream.stop_stream()
     stream.close()
 
+def reset_hooks(icon=None):
+    """Reset keyboard/mouse hooks when they stop working (e.g., after playing games)"""
+    global mouse_listener, recording, audio_frames, pressed_mouse_buttons
+
+    print("Resetting hooks...")
+
+    # Stop any ongoing recording
+    if recording:
+        recording = False
+        audio_frames = []
+        print("  Stopped stuck recording")
+
+    # Clear stuck button states
+    pressed_mouse_buttons.clear()
+
+    # Rehook keyboard (unhook all and re-register)
+    try:
+        keyboard.unhook_all()
+        keyboard.hook(on_hotkey)
+        print("  Keyboard hooks reset")
+    except Exception as e:
+        print(f"  Keyboard reset error: {e}")
+
+    # Restart mouse listener
+    try:
+        if mouse_listener is not None:
+            mouse_listener.stop()
+        mouse_listener = mouse.Listener(on_click=on_mouse_event)
+        mouse_listener.start()
+        print("  Mouse listener reset")
+    except Exception as e:
+        print(f"  Mouse reset error: {e}")
+
+    print("Reset complete! Hotkeys should work now.")
+
 def on_exit(icon):
     global mouse_listener
     icon.stop()
     if mouse_listener is not None:
         mouse_listener.stop()
+    keyboard.unhook_all()
     p.terminate()
     os._exit(0)
 
@@ -141,6 +177,7 @@ def main():
     icon = pystray.Icon("WhisperDictation")
     icon.icon = create_icon()
     icon.menu = pystray.Menu(
+        pystray.MenuItem("Reset", reset_hooks),
         pystray.MenuItem("Exit", on_exit)
     )
     icon.title = "Whisper Dictation"
