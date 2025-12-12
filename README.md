@@ -13,13 +13,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 
 The setup script auto-detects your GPU and installs everything. WhisperDictation will start automatically on boot.
 
-## Hotkeys
+## Hotkey
 
 | Hotkey | Action |
 |--------|--------|
 | **Hold Ctrl+Alt** | Start recording |
 | **Release** | Transcribe and paste at cursor |
-| **Right-click + Thumb** | Alternative trigger |
 
 ---
 

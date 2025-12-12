@@ -154,13 +154,12 @@ $Shortcut.Save()
 
 ## Usage
 
-### Hotkeys
+### Hotkey
 
 | Hotkey | Action |
 |--------|--------|
 | **Hold Ctrl+Alt** | Start recording |
 | **Release Ctrl+Alt** | Stop recording, transcribe, paste |
-| **Right-click + Thumb button** | Alternative trigger |
 
 ### Starting WhisperDictation
 
