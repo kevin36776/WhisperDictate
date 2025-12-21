@@ -24,7 +24,7 @@ The setup script auto-detects your GPU and installs everything. WhisperDictation
 
 ## Hardware Configurations
 
-### Desktop: RTX 5080 / RTX 50-series (Blackwell)
+### Desktop: RTX 5080 / RTX 50-series
 
 ```powershell
 # The setup.ps1 script auto-detects and runs:
