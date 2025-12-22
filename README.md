@@ -38,7 +38,7 @@ pip install --pre torch torchvision torchaudio --index-url https://download.pyto
 | Model | `turbo` |
 | VRAM | ~6GB |
 
-### Laptop: RTX 4060 / RTX 40-series (Ada Lovelace)
+### Laptop: RTX 4060 / RTX 40-series
 
 ```powershell
 # The setup.ps1 script auto-detects and runs:
